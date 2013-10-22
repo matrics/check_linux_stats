@@ -341,13 +341,17 @@ sub check_disk {
 				my $percentfree = sprintf("%.2f", ($free/$total)*100);
 
 				if(defined($checkthis->{$mountpoint})||defined($checkthis->{all})){
-					$return_str .= " $mountpoint $percentfree% free";
+					#$return_str .= " $mountpoint $percentfree% free";
+					my $tmpfree = sprintf("%.2f", ($free/1024)); #MB
+					my $tmpused = sprintf("%.2f", ($usage/1024)); #MB
+					$return_str .= " $mountpoint $percentused% used (".$tmpfree."MB free)";
 
 					if($o_unit =~ /\%/) {
-						if($percentfree<=$o_critical){ $crit++;}
-						elsif($percentfree<=$o_warning){ $warn++;}
+						if($percentused>=$o_critical){ $crit++;}
+						elsif($percentused>=$o_warning){ $warn++;}
 
-						$perfdata .= " $mountpoint=$usage".'KB';
+						#$perfdata .= " $mountpoint=$usage".'KB';
+						$perfdata .= " ".$mountpoint."_used=".$tmpused."MB ".$mountpoint."_pct=$percentused%;$o_warning;$o_critical";
 					}
 					else {
 # KB
@@ -369,7 +373,7 @@ sub check_disk {
 						if($tmpfree<=$o_warning){ $warn++;}
 						elsif($tmpfree<=$o_critical){ $crit++;}
 
-						$perfdata .= " $mountpoint=$usage$o_unit";
+						$perfdata .= " ".$mountpoint."_used=$usage$o_unit ".$mountpoint."_pct=$percentused%;$o_warning;$o_critical";
 					}
 				}
 			}
