@@ -118,12 +118,13 @@ sub check_cpu {
 		}
 
 		my $perfdata .= "|"
+			."InUse=$cpu_used%;$o_warning;$o_critical "
 			."user=$cpu->{user}% "
 			."system=$cpu->{system}% "
 			."iowait=$cpu->{iowait}% "
-			."idle=$cpu->{idle}%;$o_warning;$o_critical";
+			."idle=$cpu->{idle}%";
 
-		print "CPU $status : idle $cpu->{idle}% $perfdata";
+		print "CPU $status : InUsed $cpu_used% $perfdata";
 	}
 	else {
 		print "No data";
