@@ -1,4 +1,4 @@
 check_linux_stats
 =================
 
-Customisation of the perl script chack_linux_stats.pl
+Customisation of the perl script check_linux_stats.pl
